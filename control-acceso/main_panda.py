@@ -68,7 +68,7 @@ diff = 10
 # p_list = list(participacion.values())
 # p_list.sort(reverse=True)
 # diff = max(p_list[3:-1]) - min(p_list)
-while diff > 2:
+while diff > 3:
     participacion = {persona:0 for persona in itertools.chain(*roles_persona.values())}
     # Generar 20 instancias
     instancias_generadas = asignar_tareas(20)
@@ -76,11 +76,12 @@ while diff > 2:
     p_list.sort(reverse=True)
     diff = max(p_list[3:]) - min(p_list[:-1])
 
+instancias_generadas = [[i[0], i[1], i[2], i[3], [i[4], i[5]]] for i in instancias_generadas]
 # Convertir a DataFrame para mejor visualización
 df = pd.DataFrame(instancias_generadas)
-
+df.index = df.index + 1
 # Imprimir resultados en formato tabular
-print(tabulate(df, headers='keys', tablefmt='grid'))
+print(tabulate(df, headers=list(tareas_roles.keys()), tablefmt='grid'))
 
 # Imprimir la carga de trabajo de cada persona
 print("\nLa diferencia de carga de trabajo entre las personas (sin contar los DR, DM y DE, que tienen la misma tarea asignada siempre) es de:", diff)
